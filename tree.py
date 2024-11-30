@@ -3,20 +3,27 @@ from time import sleep
 
 piLED = Pin(25, Pin.OUT, value = 1)
 
-#spi = SPI(0, baudrate=400000, sck=Pin(2), mosi=Pin(3), miso=Pin(4))
-spi= SoftSPI(baudrate=30000, sck=Pin(28), mosi=Pin(12), miso=Pin(27))
-print(spi)
+# Mapping of SPI for the LED string. miso is unused, but must be supplied.
+# From initial experiments, 30K baudrate is just fast enough to make it appear
+# all LEDs are updated simultaneously.
+spi = SoftSPI(baudrate=30000, sck=Pin(28), mosi=Pin(12), miso=Pin(27))
 
-data = bytearray(4+25*4+4)
-data[0] = 0
-data[1] = 0
-data[2] = 0
-data[3] = 0
+numLEDs = 25
+header_len = 4
+frame_len = 4
 
-data[104] = 0xf
-data[105] = 0xf
-data[106] = 0xf
-data[107] = 0xf
+# enough bytes to update all of the LEDs
+# format is
+#
+# header: 0x0 0x0 0x0 0x0
+# LEDn: 0b11100000 | brightness blue green red
+# end: 0xff 0xff 0xff 0xff
+data = bytearray(header_len + numLEDs*frame_len + header_len)
+
+# initialise to set all 25 LEDs off/zero brightness
+for i in range(header_len + numLEDs*frame_len, header_len + numLEDs*frame_len + header_len): data[i] = 0xff
+for i in range(header_len, header_len + numLEDs*frame_len, frame_len): data[i] = 0b11100000
+
 
 
 def setpixeloff(offset):
@@ -25,7 +32,7 @@ def setpixeloff(offset):
 
 def setpixel(offset, brightness, r, g, b):
     global data
-    ledFrame = 4 + offset*4
+    ledFrame = header_len + offset*frame_len
     data[ledFrame] = 0b11100000 | brightness
     data[ledFrame+1] = b
     data[ledFrame+2] = g
@@ -63,7 +70,7 @@ while True:
     setpattern()
     spi.write(data)
 
-    for i in range(25):
+    for i in range(numLEDs):
         setpixeloff(i)
     
     sleep(2.15)

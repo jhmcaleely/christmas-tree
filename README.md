@@ -14,7 +14,7 @@ Which LEDs are not clarified, but it seems reasonable to speculate they are simi
 
 The datasheet for those does line up nicely with the sample code, and if we assume it is correct, then it points to a bug in the smaple code - the end frame needs to be all 1's and 4 bytes long (not 5 bytes of zero as the sample seems to use).
 
-I've wired the board to the Pico assuming I will use these as a [converter from 40-pin to pico][40-pin-pico] in hardware. As such, the SPI clock appears on GPIO 27 and the TX (mosi) appears on GPIO12 for the pico. This doesn't match the Pico's hardware SPI, so I use the software SPI.
+I've wired the board to the Pico assuming I will use these as a [converter from 40-pin to pico][40-pin-pico] in hardware. As such, the SPI clock appears on GPIO 28 and the TX (mosi) appears on GPIO12 for the pico. This doesn't match the Pico's hardware SPI, so I use the software SPI.
 
 
 [tree]: https://thepihut.com/products/3d-rgb-xmas-tree-for-raspberry-pi
