@@ -1,8 +1,4 @@
 from machine import Pin, SoftSPI
-from time import sleep
-from random import randint
-
-piLED = Pin(25, Pin.OUT, value = 1)
 
 # Mapping of SPI for the LED string. miso is unused, but must be supplied.
 # From initial experiments, 30K baudrate is just fast enough to make it appear
@@ -25,6 +21,9 @@ data = bytearray(header_len + numLEDs*frame_len + header_len)
 for i in range(header_len + numLEDs*frame_len, header_len + numLEDs*frame_len + header_len): data[i] = 0xff
 for i in range(header_len, header_len + numLEDs*frame_len, frame_len): data[i] = 0b11100000
 
+def refreshtree():
+    spi.write(data)
+
 # an order that traverses bottom to top on each leaf clockwise.
 display_index1 = [0,  1,  2, 16, 17, 18, 15, 14, 13,  6,  5,  4, 12, 11, 10, 24, 23, 22, 19, 20, 21,  7,  8,  9, 3]
 
@@ -44,27 +43,7 @@ def setpixel(offset, brightness, r, g, b):
     data[ledFrame+2] = g
     data[ledFrame+3] = r
 
-
-while True:
-    
+def settree(brightness, r, g, b):
     for i in range(numLEDs):
-        setpixeloff(i)
-    spi.write(data)
-
-    for i in range(numLEDs - 1):
-        setpixel(display_index[i], randint(1, 4), randint(0, 255), randint(0, 255), randint(0, 255))
-        spi.write(data)
-        sleep(0.1 * randint(1, 10))
-
-    # flash the top LED
-    setpixel(display_index[numLEDs-1], 10, 255, 255, 255)
-    spi.write(data)
-    sleep(0.2)
-
-    setpixeloff(display_index[numLEDs-1])
-    spi.write(data)
-    sleep(0.2)
-
-    setpixel(display_index[numLEDs-1], 10, 255, 255, 255)
-    spi.write(data)
-    sleep(0.2)
+        setpixel(i, brightness, r, g, b)
+    refreshtree()
