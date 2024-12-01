@@ -1,4 +1,4 @@
-from tree import setpixel, numLEDs, refreshtree
+from tree import setcolour, numLEDs, update_LED_string, set_string_brightness
 import random
 
 def random_color():
@@ -7,8 +7,10 @@ def random_color():
     b = random.randint(0, 255)
     return (r, g, b)
 
+set_string_brightness(1)
+
 while True:
     pixel = random.randint(0, numLEDs-1)
     r, g, b = random_color()
-    setpixel(pixel, 1, r, g, b)
-    refreshtree()
+    setcolour(pixel, r, g, b)
+    update_LED_string()
