@@ -1,17 +1,18 @@
 from machine import Pin, ADC
 from time import sleep
-from tree import settree, setcolour, numLEDs, update_LED_string, set_string_brightness, spatial_ring
+from tree import settree, setcolour, update_LED_string, set_string_brightness, spatial_ring
 
 
 # Pico LiPo features
-button = Pin(23, Pin.IN)
 charging = Pin(24, Pin.IN)
 vsys = ADC(Pin(29, Pin.IN))
 
 full_battery = 4.2
 empty_battery = 2.8
 
-set_string_brightness(1)
+def batt_percentage(voltage):
+    percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
+    return percentage
 
 def batt_voltage(v):
     adc_level = v.read_u16()
@@ -37,16 +38,4 @@ def display_percentage(percentage):
     else:
         settree(1, 0, 255, 0)
 
-while True:
-    sleep(0.5)
-    
-    voltage = batt_voltage(vsys)
-    
-    print(f'{voltage} {charging.value()}')
-    if button.value() == 0:
-        percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
-       # percentage = 24
-        display_percentage(percentage)
-    else:
-        settree(0, 0, 0, 0)
     
