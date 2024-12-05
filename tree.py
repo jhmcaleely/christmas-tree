@@ -3,7 +3,10 @@ from machine import Pin, SoftSPI
 # Mapping of SPI for the LED string. miso is unused, but must be supplied.
 # From initial experiments, 30K baudrate is just fast enough to make it appear
 # all LEDs are updated simultaneously.
-spi = SoftSPI(baudrate=30000, sck=Pin(28), mosi=Pin(12), miso=Pin(27))
+# Note that miso needs to be parked on an innocent (unconnected?) gpio. 16 seems fine.
+# For the HardStuff Pico HAT adaptor, Pico GPIO 9 maps to HAT GPIO 12,
+# and Pico GPIO 28 maps to HAT GPIO 25
+spi = SoftSPI(baudrate=30000, sck=Pin(28), mosi=Pin(9), miso=Pin(16))
 
 numLEDs = 25
 
