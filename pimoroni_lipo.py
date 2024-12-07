@@ -1,6 +1,5 @@
 from machine import Pin, ADC
-from time import sleep
-from tree import settree, setcolour, update_LED_string, set_string_brightness, spatial_ring
+from tree import set_string, numLEDs, set_pixel_off, set_pixel, update_LED_string, spatial_ring
 
 
 # Pico LiPo features
@@ -21,21 +20,23 @@ def batt_voltage(v):
     return adc_level * conversion_factor
 
 def display_percentage(percentage):
-    print(percentage)
-    set_string_brightness(1)
     if percentage < 25:
         for n in range (8):
-            setcolour(spatial_ring[n], 255, 0, 0)
+            set_pixel(spatial_ring[n], 1, 255, 0, 0)
+        for n in range (8, numLEDs):
+            set_pixel_off(spatial_ring[n])
         update_LED_string()
     elif percentage >= 25 and percentage < 50:
         for n in range (16):
-            setcolour(spatial_ring[n], 0, 255, 0)
+            set_pixel(spatial_ring[n], 1, 0, 255, 0)
+        for n in range (16, numLEDs):
+            set_pixel_off(spatial_ring[n])
         update_LED_string()
     elif percentage >= 50 and percentage < 75:
         for n in range (24):
-            setcolour(spatial_ring[n], 0, 255, 0)
+            set_pixel(spatial_ring[n], 1, 0, 255, 0)
+        for n in range (24, numLEDs):
+            set_pixel_off(spatial_ring[n])
         update_LED_string()
     else:
-        settree(1, 0, 255, 0)
-
-    
+        set_string(1, 0, 255, 0)

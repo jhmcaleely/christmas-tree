@@ -1,10 +1,20 @@
 from machine import Pin, SoftSPI
 
-# Mapping of SPI for the LED string. miso is unused, but must be supplied.
+# Raspberry Pi Pico SPI based driver for The Pi Hut 3D RGB Xmas Tree for Rasbperry Pi.
+#
+# The 3D RGB Xmas tree is documented in it's sample code, and is designed to be connected
+# to a 40-pin Raspberry Pi HAT connector. It appears to require four connections
+# - power, ground, clock and data. It seems likely the 25 LEDs are something similar to the
+# Adafruit DotStar LEDs, and appear to be driven via a 2-wire SPI protocol.
+# The LED's seem to be unfussy about power voltage (so 3.3v or 5v seems fine) and clock timing.
+# The 40-pin connector has the clock wire on GPIO25 and the data wire on GPIO12
+# (a nod to 12/25 as the date of christmas for the designer!)
+#
+# Mapping of SPI for the LED string. miso is unused, but must be supplied to SoftSPI.
 # From initial experiments, 30K baudrate is just fast enough to make it appear
 # all LEDs are updated simultaneously.
 # Note that miso needs to be parked on an innocent (unconnected?) gpio. 16 seems fine.
-# For the HardStuff Pico HAT adaptor, Pico GPIO 9 maps to HAT GPIO 12,
+# For the HardStuff Pico HAT adaptor, RP2040 GPIO 9 (exposed on Pico pin 12) maps to HAT GPIO 12,
 # and Pico GPIO 28 maps to HAT GPIO 25
 spi = SoftSPI(baudrate=30000, sck=Pin(28), mosi=Pin(9), miso=Pin(16))
 
@@ -36,30 +46,30 @@ def update_LED_string():
 # index of the LED in the tree's star/top position.
 spatial_star = 3
 
-# an order that traverses bottom to top on each leaf clockwise.
+# an order that traverses bottom to top on each leaf clockwise, with the star last.
 spatial_leaf = [0,  1,  2, 16, 17, 18, 15, 14, 13,  6,  5,  4, 12, 11, 10, 24, 23, 22, 19, 20, 21,  7,  8,  9, spatial_star]
 
-# an order that traverses clockwise around the bottom, and then upwards over three rings.
+# an order that traverses clockwise around the bottom, and then upwards over three rings. Finally the star is addressed.
 spatial_ring = [0, 16, 15,  6, 12, 24, 19,  7,  1, 17, 14,  5, 11, 23, 20,  8,  2, 18, 13,  4, 10, 22, 21,  9, spatial_star]
 
 def LEDn_frame_offset(n):
     return LED0_frame + n * frame_len
 
-def setpixeloff(offset):
-    setbrightness(offset, 0)    
+def set_pixel_off(n):
+    set_brightness(n, 0)    
 
-def setbrightness(n, brightness):
+def set_brightness(n, brightness):
     global message
-    message[LEDn_frame_offset(n)]   = 0b11100000 | brightness
+    message[LEDn_frame_offset(n)] = 0b11100000 | brightness
     
-def setcolour(n, r, g, b):
+def set_color(n, r, g, b):
     global message
     LEDn_frame = LEDn_frame_offset(n)
     message[LEDn_frame+1] = b
     message[LEDn_frame+2] = g
     message[LEDn_frame+3] = r    
     
-def setpixel(n, brightness, r, g, b):
+def set_pixel(n, brightness, r, g, b):
     global message
     LEDn_frame = LEDn_frame_offset(n)
     message[LEDn_frame]   = 0b11100000 | brightness
@@ -69,10 +79,15 @@ def setpixel(n, brightness, r, g, b):
 
 def set_string_brightness(brightness):
     for i in range(numLEDs):
-        setbrightness(i, brightness)
+        set_brightness(i, brightness)
     update_LED_string()
 
-def settree(brightness, r, g, b):
+def set_string_color(r, g, b):
     for i in range(numLEDs):
-        setpixel(i, brightness, r, g, b)
+        set_color(n, r, g, b)
+    update_LED_string()
+
+def set_string(brightness, r, g, b):
+    for i in range(numLEDs):
+        set_pixel(i, brightness, r, g, b)
     update_LED_string()

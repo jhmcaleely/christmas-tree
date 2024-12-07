@@ -1,4 +1,4 @@
-from tree import setcolour, numLEDs, update_LED_string, set_string_brightness
+from tree import set_pixel, numLEDs, update_LED_string
 import random
 from time import sleep
 from machine import Pin
@@ -15,8 +15,6 @@ def random_color():
     b = random.randint(0, 255)
     return (r, g, b)
 
-set_string_brightness(1)
-
 while True:
         
     if button.value() == 0:
@@ -25,6 +23,7 @@ while True:
         display_percentage(percentage)
     else:
         pixel = random.randint(0, numLEDs-1)
+        brightness = random.randint(1, 4)
         r, g, b = random_color()
-        setcolour(pixel, r, g, b)
+        set_pixel(pixel, brightness, r, g, b)
         update_LED_string()

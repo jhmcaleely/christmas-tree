@@ -1,4 +1,4 @@
-from tree import setcolour, numLEDs, update_LED_string, set_string_brightness
+from tree import set_color, numLEDs, update_LED_string, set_string_brightness
 import random
 
 def random_color():
@@ -12,5 +12,6 @@ set_string_brightness(1)
 while True:
     pixel = random.randint(0, numLEDs-1)
     r, g, b = random_color()
-    setcolour(pixel, r, g, b)
+    set_color(pixel, r, g, b)
     update_LED_string()
+    

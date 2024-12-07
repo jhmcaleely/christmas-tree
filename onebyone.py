@@ -1,4 +1,4 @@
-from tree import set_string_brightness, setcolour, numLEDs, update_LED_string
+from tree import set_string_brightness, set_color, numLEDs, update_LED_string, spatial_leaf
 
 colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255)]
 
@@ -8,5 +8,5 @@ while True:
     for color in colors:
         r, g, b = color
         for i in range(numLEDs):
-            setcolour(i, r, g, b)
+            set_color(spatial_leaf[i], r, g, b)
             update_LED_string()
