@@ -11,10 +11,10 @@
 #include "hardware/pio.h"
 #include "apa102.pio.h"
 
-#define PIN_CLK 2
-#define PIN_DIN 3
+#define PIN_CLK 28
+#define PIN_DIN 9
 
-#define N_LEDS 150
+#define N_LEDS 25
 #define SERIAL_FREQ (5 * 1000 * 1000)
 
 // Global brightness value 0->31
