@@ -1,0 +1,28 @@
+import("apa102");
+import("rosc");
+
+const tree_pixels = 25;
+const tree_data = 0d9;
+const tree_clock = 0d28;
+const tree_pio = 0d0;
+const tree_sm = 0d0;
+const tree_offset = 0d0;
+
+fun rand_uint8(n) {
+    uint8 rand;
+    for (var i = 0; i < n; i = i + 1) {
+        rand = rand | uint8(peek(rosc.randombit));
+        rand = rand << uint8(1);
+    }
+    return rand;
+}
+
+apa102_init(tree_pixels, tree_data, tree_clock, tree_pio, tree_sm, tree_offset);
+
+while (true) {
+    for (var i = 0; i < tree_pixels; i = i + 1) {
+        apa102_set_pixel(i, [rand_uint8(8), rand_uint8(8), rand_uint8(8)], rand_uint8(5));
+    }
+    apa102_set_pixels(0d0, 0d0, 0d0, pixels);
+}
+
