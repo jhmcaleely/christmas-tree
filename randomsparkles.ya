@@ -6,7 +6,8 @@ const tree_data = 0d9;
 const tree_clock = 0d28;
 const tree_pio = 0d0;
 const tree_sm = 0d0;
-const tree_offset = 0d0;
+const tree_program_offset = 0d0;
+const tree_dma_channel = 0d0;
 
 fun rand_uint8(n) {
     uint8 rand;
@@ -17,12 +18,12 @@ fun rand_uint8(n) {
     return rand;
 }
 
-apa102_init(tree_pixels, tree_data, tree_clock, tree_pio, tree_sm, tree_offset);
+apa102_init(tree_pixels, tree_data, tree_clock, tree_pio, tree_sm, tree_program_offset);
 
 while (true) {
     for (var i = 0; i < tree_pixels; i = i + 1) {
         apa102_set_pixel(i, [rand_uint8(8), rand_uint8(8), rand_uint8(8)], rand_uint8(5));
     }
-    apa102_set_pixels(0d0, 0d0, 0d0, pixels);
+    apa102_show_pixels(tree_dma_channel, tree_pio, tree_sm);
 }
 
