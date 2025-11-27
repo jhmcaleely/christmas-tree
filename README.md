@@ -2,7 +2,7 @@
 
 Raspberry Pi Pico Micropython and Yarg code for [The Pi Hut 3D Xmas Tree for Rasberry Pi][tree].
 
-The original board is designed as a Hat for 40-pin Raspberry Pi boards. This repo is for a Raspberry Pi Pico to drive this via a suitable adaptor.
+The original board is designed as a Hat for 40-pin Raspberry Pi boards. On these boards, using the SPI to transmit the signal the LEDs need is convenient. This repo is for a Raspberry Pi Pico to drive this via a suitable adaptor.
 
 There's no specific hardware diagram from The Pi Hut, but the [conversation here][forum thread] helps to clarify that the design appears to be for 2-wire SPI driving a string of LEDs.
 
