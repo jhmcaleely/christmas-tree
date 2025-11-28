@@ -91,3 +91,25 @@ def set_string(brightness, r, g, b):
     for i in range(numLEDs):
         set_pixel(i, brightness, r, g, b)
     update_LED_string()
+
+def display_percentage(percentage):
+    if percentage < 25:
+        for n in range (8):
+            set_pixel(spatial_ring[n], 1, 255, 0, 0)
+        for n in range (8, numLEDs):
+            set_pixel_off(spatial_ring[n])
+        update_LED_string()
+    elif percentage >= 25 and percentage < 50:
+        for n in range (16):
+            set_pixel(spatial_ring[n], 1, 0, 255, 0)
+        for n in range (16, numLEDs):
+            set_pixel_off(spatial_ring[n])
+        update_LED_string()
+    elif percentage >= 50 and percentage < 75:
+        for n in range (24):
+            set_pixel(spatial_ring[n], 1, 0, 255, 0)
+        for n in range (24, numLEDs):
+            set_pixel_off(spatial_ring[n])
+        update_LED_string()
+    else:
+        set_string(1, 0, 255, 0)

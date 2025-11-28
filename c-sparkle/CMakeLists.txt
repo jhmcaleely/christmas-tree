@@ -28,24 +28,24 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(pio_apa102 C CXX ASM)
+project(c-sparkle C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(pio_apa102)
+add_executable(c-sparkle)
 
-pico_generate_pio_header(pio_apa102 ${CMAKE_CURRENT_LIST_DIR}/apa102.pio)
+pico_generate_pio_header(c-sparkle ${CMAKE_CURRENT_LIST_DIR}/apa102.pio)
 
-target_sources(pio_apa102 PRIVATE apa102.c)
+target_sources(c-sparkle PRIVATE apa102.c)
 
-target_link_libraries(pio_apa102 PRIVATE
+target_link_libraries(c-sparkle PRIVATE
         pico_stdlib
         hardware_pio
         )
 
-pico_add_extra_outputs(pio_apa102)
+pico_add_extra_outputs(c-sparkle)
 
 # add url via pico_set_program_url

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-YARGINSTALLDIR="../yarg-lang"
+YARGINSTALLDIR="../../yarg-lang"
 HOSTYARG="$YARGINSTALLDIR/bin/hostyarg"
 
-TARGETUF2="tree.uf2"
+TARGETUF2="yarg-sparkle.uf2"
 if [ -e $TARGETUF2 ]
 then
     rm $TARGETUF2
