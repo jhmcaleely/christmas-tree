@@ -1,8 +1,8 @@
-from tree import set_pixel, numLEDs, update_LED_string
+from tree import set_pixel, numLEDs, update_LED_string, display_percentage
 import random
 from time import sleep
 from machine import Pin
-from pimoroni_lipo import batt_voltage, batt_percentage, display_percentage, vsys
+from pimoroni_lipo import batt_voltage, batt_percentage, vsys
 
 # bit of a hack, so that the USB serial appears to initialise correctly
 sleep(1)
