@@ -10,9 +10,13 @@ This repo is for a Raspberry Pi Pico to drive this via a suitable adaptor. Imple
 
 This is a lightly edited copy of the Pico SDK example '[pio/apa102][sdk-example]', which will directly support this christmas tree. It uses PIO to generate the required signal for the apa102 LEDs.
 
-## micropython
+## mp-sparkle
 
 This example evolved from the sample code for the Raspberry Pi, and uses SPI to generate the apa102 signal. Since the tree's pins do not correspond to the SPI pins on the pico, a software SPI driver is used.
+
+This example has an additional feature, if run on the Pimoroni Pico Lipo, and can display the battery percentage on the tree when the boot button is pressed.
+
+See the [README](mp-sparkle/README.md) for installation instructions.
 
 ## yarg-sparkle
 
