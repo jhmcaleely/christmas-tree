@@ -34,7 +34,7 @@ This repo uses these adaptors as a [converter from 40-pin to pico][40-pin-pico].
 
 ## PIO for apa102
 
-The PIO code is from the [Pico SDK examples][sdk-exampple], and is the same PIO program in the C and Yarg implementations.
+The PIO code is from the [Pico SDK examples][sdk-example], and is the same PIO program in the C and Yarg implementations.
 
 [tree]: https://thepihut.com/products/3d-rgb-xmas-tree-for-raspberry-pi
 [forum thread]: https://forums.raspberrypi.com/viewtopic.php?t=260938
