@@ -22,7 +22,7 @@ apa102_init(tree_pixels, tree_data, tree_clock, tree_pio, tree_sm, tree_program_
 
 while (true) {
     for (var i = 0; i < tree_pixels; i = i + 1) {
-        apa102_set_pixel(i, [rand_uint8(8), rand_uint8(8), rand_uint8(8)], rand_uint8(5));
+        apa102_set_pixel(i, [rand_uint8(8), rand_uint8(8), rand_uint8(8)], rand_uint8(3));
     }
     apa102_show_pixels(tree_dma_channel, tree_pio, tree_sm);
 }
